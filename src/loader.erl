@@ -198,11 +198,11 @@ init([]) ->
     
     case application:get_env(loader,type) of
 	{ok,worker}->
-	    Type=worker,
-	    rpc:cast(node(),worker,init,[]);
+	    %rpc:cast(node(),worker,init,[]);
+	    Type=worker;
 	{ok,controller}->
-	    Type=controller,
-	    rpc:cast(node(),controller,init,[]);
+	 %   rpc:cast(node(),controller,init,[]),
+	    Type=controller;
 	undefined->
 	    Type=undefined,
 	    init:stop()

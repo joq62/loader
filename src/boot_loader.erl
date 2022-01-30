@@ -51,7 +51,7 @@ start([worker])->
     ok=do_clone(),
     LoaderEbin=filename:join("loader","ebin"),
     true=code:add_patha(LoaderEbin),
-    ok=application:set_env([{loader,[{type,controller}]}]),
+    ok=application:set_env([{loader,[{type,worker}]}]),
     ok=application:start(loader),
     ok.
 
