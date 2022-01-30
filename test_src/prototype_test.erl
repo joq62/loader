@@ -75,7 +75,7 @@ start()->
 loader_init()->
     %% Config files and ebin for host is already loaded and the vm is started
     [H1|_]=test_nodes:get_nodes(),
-    ok=rpc:call(H1,boot_loader,start,[[worker]],10000),
+    ok=rpc:call(node(),loader,ping,[],10000),
  
  %   init:stop(),
   %  timer:sleep(5000),   
@@ -231,12 +231,7 @@ dist_1()->
 %% --------------------------------------------------------------------
 setup()->
   
-    ok=test_nodes:start_nodes(),
-    LoaderEbin=filename:join("loader","ebin"),
-    [rpc:call(N,code,add_patha,[LoaderEbin],5000)||N<-test_nodes:get_nodes()],
-    [rpc:call(N,application,start,[sd],5000)||N<-test_nodes:get_nodes()],
-    
-          
+   
     ok.
 
 %% --------------------------------------------------------------------
