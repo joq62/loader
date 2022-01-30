@@ -40,7 +40,7 @@ start([controller])->
     {ok,HostVm}=lib_vm:create(),
     HostEbin=filename:join("host","ebin"),
     true=rpc:call(HostVm,code,add_patha,[HostEbin],5000),
-    ok=rpc:call(HostVm,application,set_env,[[{host,[{type,controller}]}]],500),
+    ok=rpc:call(HostVm,application,set_env,[[{loader,[{type,controller}]}]],500),
     ok=rpc:call(HostVm,application,start,[loader],25000),
     ok;
 start([worker])->
@@ -48,9 +48,9 @@ start([worker])->
     ok=do_clone(),
     application:start(sd),
     {ok,HostVm}=lib_vm:create(),
-    HostEbin=filename:join("host","ebin"),
+    HostEbin=filename:join("loader","ebin"),
     true=rpc:call(HostVm,code,add_patha,[HostEbin],5000),
-    ok=rpc:call(HostVm,application,set_env,[[{host,[{type,controller}]}]],5000),
+    ok=rpc:call(HostVm,application,set_env,[[{leader,[{type,controller}]}]],5000),
     ok=rpc:call(HostVm,application,start,[loader],25000),
     ok.
 

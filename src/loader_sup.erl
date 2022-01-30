@@ -64,7 +64,7 @@ children()->
     [
     % ?CHILD(appl_mgr,worker),
     % ?CHILD(sd,worker),
-     ?CHILD(host,worker)
+     ?CHILD(loader,worker)
      ].
 %% ====================================================================
 %% Internal functions
