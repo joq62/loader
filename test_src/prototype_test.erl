@@ -36,26 +36,26 @@ start()->
 %    ok= boot(),
 %    io:format("~p~n",[{"Stop  boot()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
-    io:format("~p~n",[{"Start loader_init()",?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok= loader_init(),
-    io:format("~p~n",[{"Stop  loader_init()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    io:format("~p~n",[{"Start start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    ok=start_script(),
+    io:format("~p~n",[{"Stop  start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
     io:format("~p~n",[{"Start loader_vm()",?MODULE,?FUNCTION_NAME,?LINE}]),
     ok= loader_vm(),
     io:format("~p~n",[{"Stop  loader_vm()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
-    io:format("~p~n",[{"Start appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok= appl_mgr(),
-    io:format("~p~n",[{"Stop  appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   io:format("~p~n",[{"Start appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   ok= appl_mgr(),
+ %   io:format("~p~n",[{"Stop  appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
-    io:format("~p~n",[{"Start loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok= loader_appl(),
-    io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   io:format("~p~n",[{"Start loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   ok= loader_appl(),
+ %   io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
 
-    io:format("~p~n",[{"Start dist_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok=dist_1(),
-    io:format("~p~n",[{"Stop  sim_controller_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   io:format("~p~n",[{"Start dist_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   ok=dist_1(),
+ %   io:format("~p~n",[{"Stop  sim_controller_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
  %   
       %% End application tests
@@ -72,28 +72,29 @@ start()->
 %% Description: Initiate the eunit tests, set upp needed processes etc
 %% Returns: non
 %% -------------------------------------------------------------------
-loader_init()->
-    %% Config files and ebin for host is already loaded and the vm is started
-    [H1|_]=test_nodes:get_nodes(),
-    ok=rpc:call(node(),loader,ping,[],10000),
- 
- %   init:stop(),
-  %  timer:sleep(5000),   
+start_script()->
+    % suppor debugging
+    ok=application:start(sd),
+
+    % Simulate host
+    ok=test_nodes:start_nodes(),
+    [Vm1|_]=test_nodes:get_nodes(),
     
-    %% Add path to configfiles
-
-%    true=rpc:call(H1,code,add_patha,[?ApplSpecsDir],5000),
-%    true=rpc:call(H1,code,add_patha,[?HostFilesDir],5000),
-
-  %  ok=rpc:call(H1,application,set_env,[[{host,[{type,worker}]}]],5000),
-  %  ok=rpc:call(H1,application,start,[host],5000),
-  %  pong=rpc:call(H1,host,ping,[],2000),
-
- 
-   % HostEbin=filename:join(?HostDir,"ebin"),
-   % true=rpc:call(H1,code,add_patha,[HostEbin],5000),
-   % ok=boot_host:start([worker]),
+    %simulate start script
+    % rm -rf loader
+    % git clone https://github.com/joq62/loader.git loader
+    % erl -pa loader/ebin -sname loader -setcookie cookie_test -s boot_loader start worker -detached 
     
+    LoaderDir="loader",
+    LoaderGitPath="https://github.com/joq62/loader.git",
+    Ebin="loader/ebin",
+    
+    os:cmd("rm -rf "++LoaderDir),
+    os:cmd("git clone "++LoaderGitPath++" "++LoaderDir), 
+    true=rpc:call(Vm1,code,add_path,[Ebin],5000),
+    ok=rpc:call(Vm1,boot_loader,start,[[worker]],15000),
+    
+    pong=rpc:call(Vm1,loader,ping,[],2000),
     ok.
     
 %% --------------------------------------------------------------------
@@ -231,6 +232,7 @@ dist_1()->
 %% --------------------------------------------------------------------
 setup()->
   
+          
    
     ok.
 

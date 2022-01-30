@@ -39,7 +39,6 @@ create()->
     PaArgs=" ",
     EnvArgs=" ",
     Result=create(HostName,UniqueNodeName,Cookie,PaArgs,EnvArgs),
-    timer:sleep(1050),
     Result.
 
 %% --------------------------------------------------------------------
@@ -53,7 +52,6 @@ create(NodeName)->
     PaArgs=" ",
     EnvArgs=" ",
     Result=create(HostName,NodeName,Cookie,PaArgs,EnvArgs),
-    timer:sleep(1050),
     Result.
 %% --------------------------------------------------------------------
 %% Function:start/0 

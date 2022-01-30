@@ -20,7 +20,6 @@ unit_test:
 	rm -rf host dbase myadd mydivi sd leader loader;
 	rm -rf  *~ */*~  erl_cra*;
 	rm -rf appl_specs host_specs;
-	rm -rf host;
 	mkdir test_ebin;
 #	common
 #	cp ../common/src/*.app ebin;

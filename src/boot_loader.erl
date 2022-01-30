@@ -36,10 +36,12 @@
 start([controller])->
     io:format("controller ~p~n",[{?FUNCTION_NAME,?MODULE,?LINE}]),
     ok=do_clone(),
+    LoaderEbin=filename:join("loader","ebin"),
+    true=code:add_patha(LoaderEbin),
     ok=application:set_env([{loader,[{type,controller}]}]),
     ok=application:start(loader),
   %  {ok,HostVm}=lib_vm:create(),
-  %  HostEbin=filename:join("loader","ebin"),
+  % 
   %  true=rpc:call(HostVm,code,add_patha,[HostEbin],5000),
    % ok=rpc:call(HostVm,application,set_env,[[{loader,[{type,controller}]}]],500),
    % ok=rpc:call(HostVm,application,start,[loader],25000),
@@ -47,6 +49,8 @@ start([controller])->
 start([worker])->
     io:format("worker ~p~n",[{?FUNCTION_NAME,?MODULE,?LINE}]),
     ok=do_clone(),
+    LoaderEbin=filename:join("loader","ebin"),
+    true=code:add_patha(LoaderEbin),
     ok=application:set_env([{loader,[{type,controller}]}]),
     ok=application:start(loader),
     ok.
@@ -61,7 +65,7 @@ do_clone(Node)->
 
 git_clone_loader(Node)->
     rpc:call(Node,os,cmd,["rm -rf "++?LoaderDir],5000),
-    rpc:call(Node,os,cmd,["git clone "++?LoaderGitPath],5000),
+    rpc:call(Node,os,cmd,["git clone "++?LoaderGitPath++" "++?LoaderDir],5000),
     HostEbin=filename:join(?LoaderDir,"ebin"),
     true=rpc:call(Node,code,add_patha,[HostEbin],5000),
     ok.
