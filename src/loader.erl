@@ -76,7 +76,7 @@ stop()-> gen_server:call(?SERVER, {stop},infinity).
 %%---------------------------------------------------------------
 -spec restart()-> atom().
 restart()->
-    gen_server:call(?SERVER, {restart},infinity).
+    gen_server:cast(?SERVER, {restart}).
 
 %%---------------------------------------------------------------
 %% Function:load_appl(App)
