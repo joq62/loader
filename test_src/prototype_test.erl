@@ -53,9 +53,9 @@ start()->
     io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
 
- %   io:format("~p~n",[{"Start dist_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
- %   ok=dist_1(),
- %   io:format("~p~n",[{"Stop  sim_controller_1()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   io:format("~p~n",[{"Start restart()",?MODULE,?FUNCTION_NAME,?LINE}]),
+ %   ok=restart(),
+ %   io:format("~p~n",[{"Stop  restart()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
  %   
       %% End application tests

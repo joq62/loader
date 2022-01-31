@@ -24,6 +24,7 @@
 %-compile(export_all).
 
 -export([
+	 restart/1,
 	 git_load_host_files/0,
 	 git_update_host_files/0,
 
@@ -41,6 +42,17 @@
 %% ====================================================================
 %% External functions
 %% ====================================================================
+
+%% --------------------------------------------------------------------
+%% Function:start/0 
+%% Description: Initiate the eunit tests, set upp needed processes etc
+%% Returns: non
+%% --------------------------------------------------------------------
+restart(Type)->
+    application:stop(loader),
+    application:unload(loader),
+    boot_loader:start(Type),
+    ok.
 
 %% --------------------------------------------------------------------
 %% Function:start/0 

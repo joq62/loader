@@ -22,6 +22,8 @@
 
 %% External exports
 -export([
+	 restart/0,
+
 	 load_appl/2,
 	 load_appl/3,
 	 unload_appl/2,
@@ -64,6 +66,17 @@ stop()-> gen_server:call(?SERVER, {stop},infinity).
 %% ====================================================================
 %% Application handling
 %% ====================================================================
+
+%%---------------------------------------------------------------
+%% Function:restart()
+%% @doc: restart the loader similar to reboot but not restarts linux       
+%% @param: non
+%% @returns:ok
+%%
+%%---------------------------------------------------------------
+-spec restart()-> atom().
+restart()->
+    gen_server:call(?SERVER, {restart},infinity).
 
 %%---------------------------------------------------------------
 %% Function:load_appl(App)
@@ -226,6 +239,8 @@ init([]) ->
 %%          {stop, Reason, State}            (terminate/2 is called)
 %% --------------------------------------------------------------------
 
+
+
 handle_call({load_appl,Appl,Vm},_From, State) ->
     Reply=rpc:call(node(),lib_loader,load_appl,[Appl,Vm],5000),
     {reply, Reply, State};
@@ -295,6 +310,11 @@ handle_call(Request, From, State) ->
 
 handle_cast({desired_state}, State) ->
     spawn(fun()->do_desired_state() end),
+    {noreply, State};
+
+handle_cast({restart},State) ->
+    spawn(fun()->lib_loader:restart(State#state.type) end),
+    
     {noreply, State};
 
 handle_cast(Msg, State) ->
