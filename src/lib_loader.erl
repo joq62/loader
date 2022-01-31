@@ -51,7 +51,7 @@
 restart(Type)->
     application:stop(loader),
     application:unload(loader),
-    boot_loader:start(Type),
+    boot_loader:start([Type]),
     ok.
 
 %% --------------------------------------------------------------------
