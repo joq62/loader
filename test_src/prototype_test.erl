@@ -44,13 +44,13 @@ start()->
     ok= loader_vm(),
     io:format("~p~n",[{"Stop  loader_vm()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
- %   io:format("~p~n",[{"Start appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
- %   ok= appl_mgr(),
- %   io:format("~p~n",[{"Stop  appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    io:format("~p~n",[{"Start appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    ok= appl_mgr(),
+    io:format("~p~n",[{"Stop  appl_mgr()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
- %   io:format("~p~n",[{"Start loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
- %   ok= loader_appl(),
- %   io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    io:format("~p~n",[{"Start loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    ok= loader_appl(),
+    io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
 
  %   io:format("~p~n",[{"Start dist_1()",?MODULE,?FUNCTION_NAME,?LINE}]),

@@ -106,6 +106,7 @@ load_appl(Appl,Vsn,Vm)->
 
 
 do_load(Appl,ApplDirPath,Vm)->
+    io:format("Appl,ApplDirPath,Vm ~p~n",[{Appl,ApplDirPath,Vm,?MODULE,?FUNCTION_NAME,?LINE}]),
     EbinPath=filename:join(ApplDirPath,"ebin"),
     Result=case rpc:call(Vm,code,add_patha,[EbinPath],5000) of
 	       {Error,Reason}->
