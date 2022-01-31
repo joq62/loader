@@ -35,6 +35,8 @@
 %% --------------------------------------------------------------------
 start([controller])->
     io:format("controller ~p~n",[{?FUNCTION_NAME,?MODULE,?LINE}]),
+    application:stop(loader),
+    application:unload(loader),
     ok=do_clone(),
     LoaderEbin=filename:join("loader","ebin"),
     true=code:add_patha(LoaderEbin),
@@ -48,6 +50,8 @@ start([controller])->
     ok;
 start([worker])->
     io:format("worker ~p~n",[{?FUNCTION_NAME,?MODULE,?LINE}]),
+    application:stop(loader),
+    application:unload(loader),
     ok=do_clone(),
     LoaderEbin=filename:join("loader","ebin"),
     true=code:add_patha(LoaderEbin),
