@@ -49,9 +49,15 @@
 %% Returns: non
 %% --------------------------------------------------------------------
 restart(Type)->
-    application:stop(loader),
-    application:unload(loader),
-    boot_loader:start([Type]),
+    io:format("application:stop(loader) ~p~n",[{application:stop(loader),
+						?HostNodesFile,?FUNCTION_NAME,?MODULE,?LINE}]),
+    io:format("application:unload(loader) ~p~n",[{application:unload(loader),
+					    ?HostNodesFile,?FUNCTION_NAME,?MODULE,?LINE}]),
+    io:format("  boot_loader:start([Type]), ~p~n",[{boot_loader:start([Type]),
+						?HostNodesFile,?FUNCTION_NAME,?MODULE,?LINE}]),
+   % application:stop(loader),
+   % application:unload(loader),
+   % boot_loader:start([Type]),
     ok.
 
 %% --------------------------------------------------------------------
