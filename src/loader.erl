@@ -242,35 +242,35 @@ init([]) ->
 
 
 handle_call({load_appl,Appl,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_loader,load_appl,[Appl,Vm],5000),
+    Reply=rpc:call(node(),lib_loader,load_appl,[Appl,Vm],20*1000),
     {reply, Reply, State};
 
 handle_call({load_appl,Appl,Vsn,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_loader,load_appl,[Appl,Vsn,Vm],5000),
+    Reply=rpc:call(node(),lib_loader,load_appl,[Appl,Vsn,Vm],20*1000),
     {reply, Reply, State};
 
 handle_call({unload_appl,Appl,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_loader,unload_appl,[Appl,Vm],5000),
+    Reply=rpc:call(node(),lib_loader,unload_appl,[Appl,Vm],20*1000),
     {reply, Reply, State};
 
 handle_call({start_appl,Appl,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_loader,start_appl,[Appl,Vm],5000),
+    Reply=rpc:call(node(),lib_loader,start_appl,[Appl,Vm],20*1000),
     {reply, Reply, State};
 
 handle_call({stop_appl,Appl,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_loader,stop_appl,[Appl,Vm],5000),
+    Reply=rpc:call(node(),lib_loader,stop_appl,[Appl,Vm],20*1000),
     {reply, Reply, State};
 
 handle_call({create},_From, State) ->
-    Reply=rpc:call(node(),lib_vm,create,[],5000),
+    Reply=rpc:call(node(),lib_vm,create,[],20*1000),
     {reply, Reply, State};
 
 handle_call({create,NodeName},_From, State) ->
-    Reply=rpc:call(node(),lib_vm,create,[NodeName],5000),
+    Reply=rpc:call(node(),lib_vm,create,[NodeName],20*1000),
     {reply, Reply, State};
 
 handle_call({delete,Vm},_From, State) ->
-    Reply=rpc:call(node(),lib_vm,delete,[Vm],5000),
+    Reply=rpc:call(node(),lib_vm,delete,[Vm],20*1000),
     {reply, Reply, State};
 
 
