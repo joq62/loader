@@ -2,7 +2,7 @@ all:
 #	service
 	rm -rf ebin/* src/*.beam *.beam test_src/*.beam test_ebin;
 	rm -rf dbase myadd mydivi sd leader loader;
-	rm -rf host;
+	rm -rf host service;
 	rm -rf appl_specs host_specs;
 	rm -rf  *~ */*~  erl_cra*;
 #	sd
@@ -17,7 +17,7 @@ all:
 	echo Done
 unit_test:
 	rm -rf ebin/* src/*.beam *.beam test_src/*.beam test_ebin;
-	rm -rf host dbase myadd mydivi sd leader loader;
+	rm -rf host dbase myadd mydivi sd leader loader service;
 	rm -rf  *~ */*~  erl_cra*;
 	rm -rf appl_specs host_specs;
 	mkdir test_ebin;

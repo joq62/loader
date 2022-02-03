@@ -53,9 +53,9 @@ start()->
     io:format("~p~n",[{"Stop  loader_appl()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
 
- %   io:format("~p~n",[{"Start restart()",?MODULE,?FUNCTION_NAME,?LINE}]),
- %   ok=restart(),
- %   io:format("~p~n",[{"Stop  restart()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    io:format("~p~n",[{"Start service()",?MODULE,?FUNCTION_NAME,?LINE}]),
+    ok=service(),
+    io:format("~p~n",[{"Stop  service()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
  %   
       %% End application tests
@@ -193,13 +193,17 @@ loader_appl()->
 %% Description: Initiate the eunit tests, set upp needed processes etc
 %% Returns: non
 %% -------------------------------------------------------------------
-dist_1()->
+service()->
     [H1,H2,H3]=test_nodes:get_nodes(),
     io:format("sd:all ~p~n",[{rpc:call(H1,sd,all,[],2000),?FUNCTION_NAME,?MODULE,?LINE}]),
 
-    ok=rpc:call(H2,boot_loader,start,[[controller]],10000),
-    ok=rpc:call(H3,boot_loader,start,[[controller]],10000),
-   
+    [LoaderVm]=sd:get(loader),
+    ok=rpc:call(LoaderVm,loader,load_appl,[myadd,LoaderVm],5000),
+    ok=rpc:call(LoaderVm,loader,start_appl,[myadd,LoaderVm],5000),
+ 
+    42=rpc:call(LoaderVm,myadd,add,[20,22],1000),
+
+ 
   %  [H1,H2,H3]=lists:sort(rpc:call(H1,sd,get,[loader],2000)),
   %  [H1,H2,H3]=lists:sort(rpc:call(H2,sd,get,[loader],2000)),
   %  [H1,H2,H3]=lists:sort(rpc:call(H3,sd,get,[loader],2000)),
