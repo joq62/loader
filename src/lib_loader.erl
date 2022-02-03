@@ -126,11 +126,11 @@ load_appl(Appl,Vsn,Vm)->
 do_load(Appl,ApplDirPath,Vm)->
     io:format("Appl,ApplDirPath,Vm ~p~n",[{Appl,ApplDirPath,Vm,?MODULE,?FUNCTION_NAME,?LINE}]),
     EbinPath=filename:join(ApplDirPath,"ebin"),
-    Result=case rpc:call(Vm,code,add_patha,[EbinPath],5000) of
+    Result=case rpc:call(Vm,code,add_patha,[EbinPath],30*1000) of
 	       {Error,Reason}->
 		   {Error,Reason};
 	       true->
-		   case rpc:call(Vm,application,load,[Appl],5000) of
+		   case rpc:call(Vm,application,load,[Appl],30*1000) of
 		       {Error,Reason}->
 			   {Error,Reason};
 		       ok->
@@ -145,7 +145,7 @@ do_load(Appl,ApplDirPath,Vm)->
 %% Returns: non
 %% --------------------------------------------------------------------
 unload_appl(Appl,Vm)->
-    rpc:call(Vm,application,unload,[Appl],10*1000).
+    rpc:call(Vm,application,unload,[Appl],30*1000).
 
 
 %% --------------------------------------------------------------------
@@ -154,7 +154,7 @@ unload_appl(Appl,Vm)->
 %% Returns: non
 %% --------------------------------------------------------------------
 start_appl(Appl,Vm)->
-    rpc:call(Vm,application,start,[Appl],10*1000).
+    rpc:call(Vm,application,start,[Appl],30*1000).
 
 
 %% --------------------------------------------------------------------
@@ -163,5 +163,5 @@ start_appl(Appl,Vm)->
 %% Returns: non
 %% --------------------------------------------------------------------
 stop_appl(Appl,Vm)->
-    rpc:call(Vm,application,stop,[Appl],10*1000).
+    rpc:call(Vm,application,stop,[Appl],30*1000).
 
