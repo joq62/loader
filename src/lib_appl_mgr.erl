@@ -45,7 +45,7 @@ get_info(Type,{{App,Vsn},Path})->
 	       {error,Reason}->
 		   {error,[Reason,App,Vsn]};
 	       {ok,Info} ->
-		   proplists:get_value(Type,Info)
+		   appfile:read(Type,Info)
 	   end,
     Result.
     
