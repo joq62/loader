@@ -51,11 +51,7 @@ start()->
 %% --------------------------------------------------------------------
 
 setup()->
-    ok=file:make_dir("host"),
-    ok=file:make_dir("host/1.0.0"),
-    ok=file:make_dir("host/1.0.0/ebin"),
-    os:cmd("cp ebin/* host/1.0.0/ebin"),
-    true=code:add_patha("host/1.0.0/ebin"),
+  
     ok.
 
 

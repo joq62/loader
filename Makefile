@@ -30,6 +30,12 @@ unit_test:
 #	appl_mgr
 	cp ../appl_mgr/src/*.app ebin;
 	erlc -D unit_test -I ../infra/log_server/include -I include -o ebin ../appl_mgr/src/*.erl;
+#	host
+#	cp ../host/src/*.app ebin;
+#	erlc -D unit_test -I ../infra/log_server/include -I include -o ebin ../host/src/*.erl;
+#	controller
+#	cp ../controller/src/*.app ebin;
+#	erlc -D unit_test -I ../infra/log_server/include -I include -o ebin ../controller/src/*.erl;
 #	Target application
 	cp src/*.app ebin;
 	erlc -D unit_test -I ../infra/log_server/include -I include -o ebin src/*.erl;

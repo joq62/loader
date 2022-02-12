@@ -28,7 +28,7 @@
 %% Returns: non
 %% --------------------------------------------------------------------
 start()->
-  %  io:format("~p~n",[{"Start setup",?MODULE,?FUNCTION_NAME,?LINE}]),
+    io:format("~p~n",[{"Start setup",?MODULE,?FUNCTION_NAME,?LINE}]),
     ok=setup(),
     io:format("~p~n",[{"Stop setup",?MODULE,?FUNCTION_NAME,?LINE}]),
 
@@ -36,9 +36,9 @@ start()->
 %    ok= boot(),
 %    io:format("~p~n",[{"Stop  boot()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
-    io:format("~p~n",[{"Start start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok=start_script(),
-    io:format("~p~n",[{"Stop  start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
+%    io:format("~p~n",[{"Start start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
+%    ok=start_script(),
+%    io:format("~p~n",[{"Stop  start_script()",?MODULE,?FUNCTION_NAME,?LINE}]),
 
     io:format("~p~n",[{"Start loader_vm()",?MODULE,?FUNCTION_NAME,?LINE}]),
     ok= loader_vm(),
@@ -132,14 +132,18 @@ appl_mgr()->
     [LoaderVm]=rpc:call(H1,sd,get,[loader],5000),
     {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,"1.0.0"],5000),
 %    ok=rpc:call(H1,appl_mgr,load_specs,[],5000),
-%    io:format(" ~p~n",[{appl_mgr:all_app_info(),?FUNCTION_NAME,?MODULE,?LINE}]),
+%    io:format(" ~p~n",[{rpc:call(LoaderVm,appl_mgr,get_all_appl_info,[],5000),?FUNCTION_NAME,?MODULE,?LINE}]),
+ 
     {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,"1.0.0"],5000),
     {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,latest],5000),
-    
-   
     {ok,"myadd/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[myadd,"1.0.0"],5000),
     {ok,"myadd/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[myadd,latest],5000),
    
+
+    %get types info per app
+    gl=rpc:call(LoaderVm,appl_mgr,ping,[],5000),
+    gl=rpc:call(LoaderVm,appl_mgr,get_info,[dbase,"1.0.0",constraints],5000),
+    
     ok.
 
 %% --------------------------------------------------------------------
@@ -235,6 +239,19 @@ service()->
 %% Returns: non
 %% --------------------------------------------------------------------
 setup()->
+   % suppor debugging
+    ok=application:start(sd),
+
+    % Simulate host
+    ok=test_nodes:start_nodes(),
+    [Vm1|_]=test_nodes:get_nodes(),
+
+    Ebin="ebin",
+    
+    true=rpc:call(Vm1,code,add_path,[Ebin],5000),
+    ok=rpc:call(Vm1,boot_loader,start,[[worker]],15000),
+    
+    pong=rpc:call(Vm1,loader,ping,[],2000),
   
           
    

@@ -208,13 +208,17 @@ init([]) ->
     ok=application:start(sd),
     Res=rpc:call(node(),lib_loader,connect_nodes,[],5000),
     io:format("connect  ~p~n",[{Res,?FUNCTION_NAME,?MODULE,?LINE}]),
+ 
+ %   ok=application:start(host),
+ %   ok=application:start(controller),
     
+   
     case application:get_env(loader,type) of
 	{ok,worker}->
-	    %rpc:cast(node(),worker,init,[]);
+%	    ok=rpc:cast(node(),type_init,controller,[]);
 	    Type=worker;
 	{ok,controller}->
-	 %   rpc:cast(node(),controller,init,[]),
+%	    ok=rpc:cast(node(),type_init,controller,[]);
 	    Type=controller;
 	undefined->
 	    Type=undefined,
