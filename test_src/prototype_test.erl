@@ -130,18 +130,19 @@ appl_mgr()->
     % Test loader initiated in loader_init
     [H1|_]=test_nodes:get_nodes(),
     [LoaderVm]=rpc:call(H1,sd,get,[loader],5000),
-    {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,"1.0.0"],5000),
+    {ok,"leader/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[leader,"1.0.0"],5000),
 %    ok=rpc:call(H1,appl_mgr,load_specs,[],5000),
 %    io:format(" ~p~n",[{rpc:call(LoaderVm,appl_mgr,get_all_appl_info,[],5000),?FUNCTION_NAME,?MODULE,?LINE}]),
  
-    {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,"1.0.0"],5000),
-    {ok,"dbase/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[dbase,latest],5000),
+    {ok,"leader/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[leader,"1.0.0"],5000),
+    {ok,"leader/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[leader,latest],5000),
     {ok,"myadd/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[myadd,"1.0.0"],5000),
     {ok,"myadd/1.0.0"}=rpc:call(LoaderVm,appl_mgr,get_appl_dir,[myadd,latest],5000),
    
 
-    %get types info per app
-   gl=rpc:call(LoaderVm,appl_mgr,get_info,[dbase,"1.0.0",constraints],5000),
+   %get types info per ap constraints
+   
+   gl=rpc:call(LoaderVm,appl_mgr,get_info,[leader,"1.0.0",constraints],5000),
     
     ok.
 

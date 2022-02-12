@@ -41,7 +41,7 @@
 get_info(Type,{{App,Vsn},Path})->
     AppFile=atom_to_list(App)++".app",
     AppFilePath=filename:join([Path,"ebin",AppFile]),
-    appfile:read(Type,AppFilePath).
+    appfile:read(AppFilePath,Type).
     
     
 %% --------------------------------------------------------------------
