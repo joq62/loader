@@ -29,7 +29,7 @@ read(AppFile,Type)->
 	       {ok,AllInfo}->
 		   read_app_file(AllInfo,Type);
 	       {error,Reason}->
-		   {error,Reason}
+		   {error,[Reason,AppFile,Type,?MODULE,?FUNCTION_NAME,?LINE]}
 	   end,
     Result.
 

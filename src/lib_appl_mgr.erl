@@ -41,13 +41,7 @@
 get_info(Type,{{App,Vsn},Path})->
     AppFile=atom_to_list(App)++".app",
     AppFilePath=filename:join([Path,"ebin",AppFile]),
-    Result=case file:consult(AppFilePath) of
-	       {error,Reason}->
-		   {error,[Reason,App,Vsn]};
-	       {ok,Info} ->
-		   appfile:read(Type,Info)
-	   end,
-    Result.
+    appfile:read(Type,AppFilePath).
     
     
 %% --------------------------------------------------------------------
