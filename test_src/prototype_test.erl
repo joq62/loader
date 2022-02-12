@@ -141,8 +141,7 @@ appl_mgr()->
    
 
     %get types info per app
-    gl=rpc:call(LoaderVm,appl_mgr,ping,[],5000),
-    gl=rpc:call(LoaderVm,appl_mgr,get_info,[dbase,"1.0.0",constraints],5000),
+   gl=rpc:call(LoaderVm,appl_mgr,get_info,[dbase,"1.0.0",constraints],5000),
     
     ok.
 
